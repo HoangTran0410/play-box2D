@@ -8,6 +8,10 @@ function SpaceShip(x, y){
 	this.shipBox = createShape('circle', x, y, this.w, this.h, this.w*this.h, 0.5, 0);
 	this.shipBox.image(this.textureShip, 0);
 
+	this.addShip = function(){
+		ship = new SpaceShip(250, 250);
+	}
+
 	this.control = function(){
 		if(keyIsDown(LEFT_ARROW))
 			this.shipBox.applyTorque(-this.w*this.h*2);

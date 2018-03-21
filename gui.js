@@ -5,6 +5,9 @@ var newGUI = {
 	pauseF : function(){
 		newGUI.pause = !newGUI.pause;
 	},
+	addShip : function(){
+		ship.addShip();
+	},
 	addBox : function() {
 		var newShape = createShape('box', 100, 100, newGUI.w, newGUI.h);
 		newShape.color = color(120, 255, 140);
@@ -14,6 +17,18 @@ var newGUI = {
 		var newShape = createShape('circle', 100, 100, newGUI.w, newGUI.h);
 		newShape.color = color(255, 120, 130);
         newShape.display(attr1, 0);	
+	}, 
+	help : function(){
+		alert(	'Designer  : Hoang Tran\n' +
+				'Made with : P5js + box2D + dat.gui \n\n' +
+				'KEY : \n' +
+				'   Arrow : control ship \n' +
+				'   Space : gun fire \n' +
+				'     B : add box \n' +
+				'     C : add circle \n' +
+				'     S : add ship \n' +
+				'     P : pause/resume game \n' +
+				'     Q : delete object at mouse position \n');
 	}
 }
 
@@ -22,7 +37,9 @@ function createGui(){
 
 	gui.add(newGUI, 'w', 0, 100).name('width').listen();
 	gui.add(newGUI, 'h', 0, 100).name('height').listen();
+	gui.add(newGUI, 'addShip').name('Add Ship');
 	gui.add(newGUI, 'addBox').name('Add Box');
 	gui.add(newGUI, 'addCir').name('Add Circle');
 	gui.add(newGUI, 'pauseF').name('Pause');
+	gui.add(newGUI, 'help').name('Help');
 }

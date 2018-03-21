@@ -22,6 +22,7 @@ function setup() {
     createWall(0, height/2, 5, height); // left wall
     createWall(width, height/2, 5, height); // right wall
     ship = new SpaceShip(250, 250);
+
     // for(var i =0; i < 15; i++){
     //     var big = random(10, 70);
     //     var c = createShape('circle', random(width), random(height), big, big);
@@ -41,11 +42,12 @@ function draw() {
     
     if (mouse != null) mouse.setTarget(v(mouseX, mouseY), mouseIndex);
 
-    if(random()<1 && !newGUI.pause){
-        var shapeNew = createShape('circle', width/2, 5, 10, 10, 1, 0.5, 0.1);
-        shapeNew.life = 100;
-        shapeNew.image(waterImage, 0);
-    }      
+    // if(random()<1 && !newGUI.pause){
+    //     var shapeNew = createShape('circle', random(width/2-20, width/2+20), 5, 10, 10, 1, 0.5, 0.1);
+    //     shapeNew.life = 20;
+    //     shapeNew.image(waterImage, 0);
+    //     shapeNew.applyImpulse(v(random(-2, 2), random(2)), 0.05);
+    // }      
 
     b2Draw(false);
     displayMouse();
@@ -62,8 +64,10 @@ function keyPressed(){
         newGUI.addBox();
     } else if(keyCode == 67){ // C key
         newGUI.addCir();
-    } else if(keyCode == 80){
+    } else if(keyCode == 80){ // P key
         newGUI.pauseF();
+    } else if(keyCode == 83){ // S key
+        newGUI.addShip();
     }
 }
 
