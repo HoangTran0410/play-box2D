@@ -42,12 +42,12 @@ function draw() {
     
     if (mouse != null) mouse.setTarget(v(mouseX, mouseY), mouseIndex);
 
-    // if(random()<1 && !newGUI.pause){
-    //     var shapeNew = createShape('circle', random(width/2-20, width/2+20), 5, 10, 10, 1, 0.5, 0.1);
-    //     shapeNew.life = 20;
-    //     shapeNew.image(waterImage, 0);
-    //     shapeNew.applyImpulse(v(random(-2, 2), random(2)), 0.05);
-    // }      
+    if(random()<1 && !newGUI.pause){
+        var shapeNew = createShape('circle', random(width/2-20, width/2+20), 5, 10, 10, 1, 0.5, 0.1);
+        shapeNew.life = 20;
+        shapeNew.image(waterImage, 0);
+        shapeNew.applyImpulse(v(random(-2, 2), random(2)), 0.05);
+    }      
 
     b2Draw(false);
     displayMouse();
