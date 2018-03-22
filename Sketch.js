@@ -16,7 +16,7 @@ function setup() {
     waterImage = createImg("Texture/Water2.png").hide();
 
     createGui();
-    b2newWorld(45, v(0, 0));
+    b2newWorld(45, v(0, 5);
     createWall(width/2, 0, width, 5); // Top wall
     createWall(width/2, height, width, 5); // bottom wall
     createWall(0, height/2, 5, height); // left wall
