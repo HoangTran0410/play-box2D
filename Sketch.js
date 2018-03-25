@@ -15,7 +15,6 @@ function setup() {
     imageMode(CENTER);
     timeStep = millis();
     gunSound = loadSound("Sound/Player_Shoot.wav");
-    gunSound.setVolume(0.5);
     backImage = createImg("Texture/BackGround2.jpeg").hide();
     meteoriteImage = createImg("Texture/meteorite.png").hide();
     waterImage = createImg("Texture/Water.png").hide();
