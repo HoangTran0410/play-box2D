@@ -2,6 +2,7 @@ var mouse = null;
 var mouseIndex;
 
 var ship;
+var gunSound;
 var backImage;
 var meteoriteImage;
 var waterImage;
@@ -11,6 +12,7 @@ function setup() {
     noCursor();
 
     imageMode(CENTER);
+    gunSound = loadSound("Sound/Player_Shoot.wav");
     backImage = createImg("Texture/BackGround2.jpeg").hide();
     meteoriteImage = createImg("Texture/meteorite.png").hide();
     waterImage = createImg("Texture/Water.png").hide();
