@@ -9,12 +9,12 @@ var newGUI = {
 		ship.addShip();
 	},
 	addBox : function() {
-		var newShape = createShape('box', 100, 100, newGUI.w, newGUI.h);
+		var newShape = createShape('box', 100, 100, newGUI.w, newGUI.h, newGUI.w*newGUI.h, 0.5, 0.6);
 		newShape.color = color(120, 255, 140);
         newShape.display(attr1, 0);
 	},
 	addCir : function(){
-		var newShape = createShape('circle', 100, 100, newGUI.w, newGUI.h);
+		var newShape = createShape('circle', 100, 100, newGUI.w, newGUI.h, newGUI.w*newGUI.h, 0.5, 0.6);
 		newShape.color = color(255, 120, 130);
         newShape.display(attr1, 0);	
 	}, 

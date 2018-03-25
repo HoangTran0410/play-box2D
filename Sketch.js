@@ -7,16 +7,16 @@ var meteoriteImage;
 var waterImage;
 
 function setup() {
-    createCanvas(500, 500);
+    createCanvas(600, 600);
     noCursor();
 
     imageMode(CENTER);
     backImage = createImg("Texture/BackGround2.jpeg").hide();
-    meteoriteImage = createImg("Texture/meteorite .png").hide();
-    waterImage = createImg("Texture/Water2.png").hide();
+    meteoriteImage = createImg("Texture/meteorite.png").hide();
+    waterImage = createImg("Texture/Water.png").hide();
 
     createGui();
-    b2newWorld(45, v(0, 5));
+    b2newWorld(45, v(0, 0));
     createWall(width/2, 0, width, 5); // Top wall
     createWall(width/2, height, width, 5); // bottom wall
     createWall(0, height/2, 5, height); // left wall
@@ -25,14 +25,15 @@ function setup() {
 
     // for(var i =0; i < 15; i++){
     //     var big = random(10, 70);
-    //     var c = createShape('circle', random(width), random(height), big, big);
+    //     var c = createShape('circle', random(width), random(height), big, big, big*big, 0.5, 0.6);
     //     c.applyImpulse(v(random(10), random(10)), 0.1);
     //     c.image(meteoriteImage, 0);
-    // }   
+    // }
 }
 
 function draw() {
-    image(backImage, width/2, height/2, width, height);
+    //image(backImage, width/2, height/2, width, height);
+    background(20, 200);
 
     if(!newGUI.pause){
         ship.control();
@@ -42,12 +43,12 @@ function draw() {
     
     if (mouse != null) mouse.setTarget(v(mouseX, mouseY), mouseIndex);
 
-    if(random()<1 && !newGUI.pause){
-        var shapeNew = createShape('circle', random(width/2-20, width/2+20), 5, 10, 10, 1, 0.5, 0.1);
-        shapeNew.life = 50;
-        shapeNew.image(waterImage, 0);
-        shapeNew.applyImpulse(v(random(-2, 2), random(2)), 0.05);
-    }      
+    // if(random()<1 && !newGUI.pause){
+    //     var shapeNew = createShape('circle', random(width), 5, 10, 10, 1, 0.5, 0.1);
+    //     shapeNew.life = 30;
+    //     shapeNew.image(waterImage, 0);
+    //     shapeNew.applyImpulse(v(0, random(1,5)), 0.1);
+    // }      
 
     b2Draw(false);
     displayMouse();
@@ -107,7 +108,7 @@ function createWall(x, y, w, h) {
     return new b2Body('box', false, v(x, y), v(w, h)); 
 }
 
-function createShape(type, x, y, w, h, density = w*h, friction = 0.5, bounce = 0.6) { 
+function createShape(type, x, y, w, h, density, friction, bounce) { 
     var shape = new b2Body(type, true, v(x, y), v(w, h), density, friction, bounce);
     return shape;
 }
