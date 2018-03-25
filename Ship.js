@@ -23,8 +23,9 @@ function SpaceShip(x, y){
 		if(keyIsDown(DOWN_ARROW))
 			this.shipBox.applyImpulse(v(-cos(this.shipBox.angle-PI/2), 
 				-sin(this.shipBox.angle-PI/2)), this.w*this.h*0.3);
-		if(keyIsDown(32))
+		if(keyIsDown(32)) {
 			this.fire();
+		}
 	}
 
 	this.update = function(){
@@ -32,13 +33,18 @@ function SpaceShip(x, y){
 
 
 	this.fire = function(){
-		gunSound.play();
-		var xBullet = this.shipBox.xy.x+cos(this.shipBox.angle-PI/2);
-		var yBullet = this.shipBox.xy.y+sin(this.shipBox.angle-PI/2);
-		var bull = createShape('circle', xBullet, yBullet, 15, 15, 15*15, 0.5, 0.6);
-		bull.applyImpulse(v(cos(this.shipBox.angle-PI/2), 
-			sin(this.shipBox.angle-PI/2)), 15*15*2);
-		bull.life = 50;
-		bull.image(this.textureBull, 0);
+		var timeNow = millis();
+		if(timeNow - timeStep > 100) {
+			gunSound.play();
+			var xBullet = this.shipBox.xy.x+cos(this.shipBox.angle-PI/2);
+			var yBullet = this.shipBox.xy.y+sin(this.shipBox.angle-PI/2);
+			var bull = createShape('circle', xBullet, yBullet, 15, 15, 15*15, 0.5, 0.6);
+			bull.applyImpulse(v(cos(this.shipBox.angle-PI/2), 
+				sin(this.shipBox.angle-PI/2)), 15*15);
+			bull.life = 50;
+			bull.image(this.textureBull, 0);
+
+			timeStep = timeNow;
+		}
 	}
 }
