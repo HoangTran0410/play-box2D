@@ -33,7 +33,6 @@ function SpaceShip(x, y){
 
 
 	this.fire = function(){
-		gunSound.pause();
 		var timeNow = millis();
 		if(timeNow - timeStep > 100) {
 			gunSound.play();
