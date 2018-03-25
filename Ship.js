@@ -5,7 +5,7 @@ function SpaceShip(x, y){
 	this.h = 70;
 	this.textureShip = createImg("Texture/Spaceship2.png").hide();
 	this.textureBull = createImg("Texture/bullet2.png").hide();
-	this.shipBox = createShape('circle', x, y, this.w, this.h, this.w*this.h, 0.5, 0);
+	this.shipBox = createShape('box', x, y, this.w, this.h, this.w*this.h, 0.5, 0);
 	this.shipBox.image(this.textureShip, 0);
 
 	this.addShip = function(){
