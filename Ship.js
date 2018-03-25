@@ -35,10 +35,10 @@ function SpaceShip(x, y){
 	this.fire = function(){
 		var timeNow = millis();
 		if(timeNow - timeStep > 100) {
-			gunSound.play();
+			//gunSound.play();
 			var xBullet = this.shipBox.xy.x+cos(this.shipBox.angle-PI/2);
 			var yBullet = this.shipBox.xy.y+sin(this.shipBox.angle-PI/2);
-			var bull = createShape('circle', xBullet, yBullet, 15, 15, 15*15, 0.5, 0.6);
+			var bull = createShape('box', xBullet, yBullet, 15, 15, 15*15, 0.5, 0.6, this.shipBox.angle);
 			bull.applyImpulse(v(cos(this.shipBox.angle-PI/2), 
 				sin(this.shipBox.angle-PI/2)), 15*15);
 			bull.life = 50;

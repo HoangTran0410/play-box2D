@@ -15,6 +15,7 @@ function setup() {
     imageMode(CENTER);
     timeStep = millis();
     gunSound = loadSound("Sound/Player_Shoot.wav");
+    gunSound.setVolume(0.5);
     backImage = createImg("Texture/BackGround2.jpeg").hide();
     meteoriteImage = createImg("Texture/meteorite.png").hide();
     waterImage = createImg("Texture/Water.png").hide();
@@ -112,8 +113,8 @@ function createWall(x, y, w, h) {
     return new b2Body('box', false, v(x, y), v(w, h)); 
 }
 
-function createShape(type, x, y, w, h, density, friction, bounce) { 
-    var shape = new b2Body(type, true, v(x, y), v(w, h), density, friction, bounce);
+function createShape(type, x, y, w, h, density, friction, bounce, angle = 0) { 
+    var shape = new b2Body(type, true, v(x, y), v(w, h), density, friction, bounce, angle);
     return shape;
 }
 
