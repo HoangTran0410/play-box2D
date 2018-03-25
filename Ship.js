@@ -1,6 +1,5 @@
 function SpaceShip(x, y){
-
-	this.dir = 0;
+	
 	this.w = 70;
 	this.h = 70;
 	this.textureShip = createImg("Texture/Spaceship2.png").hide();
