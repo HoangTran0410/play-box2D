@@ -32,7 +32,7 @@ function SpaceShip(x, y){
 
 
 	this.fire = function(){
-		//gunSound.play();
+		gunSound.play();
 		var xBullet = this.shipBox.xy.x+cos(this.shipBox.angle-PI/2);
 		var yBullet = this.shipBox.xy.y+sin(this.shipBox.angle-PI/2);
 		var bull = createShape('circle', xBullet, yBullet, 15, 15, 15*15, 0.5, 0.6);
