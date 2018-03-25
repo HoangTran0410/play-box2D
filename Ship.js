@@ -13,22 +13,33 @@ function SpaceShip(x, y){
 	}
 
 	this.control = function(){
-		if(keyIsDown(LEFT_ARROW))
-			this.shipBox.applyTorque(-this.w*this.h*2);
-		if(keyIsDown(RIGHT_ARROW))
-			this.shipBox.applyTorque(this.w*this.h*2);
-		if(keyIsDown(UP_ARROW))
-			this.shipBox.applyImpulse(v(cos(this.shipBox.angle-PI/2), 
-				sin(this.shipBox.angle-PI/2)), this.w*this.h*0.3);
-		if(keyIsDown(DOWN_ARROW))
-			this.shipBox.applyImpulse(v(-cos(this.shipBox.angle-PI/2), 
-				-sin(this.shipBox.angle-PI/2)), this.w*this.h*0.3);
+		// if(keyIsDown(LEFT_ARROW))
+		// 	this.shipBox.applyTorque(-this.w*this.h*2);
+		// if(keyIsDown(RIGHT_ARROW))
+		// 	this.shipBox.applyTorque(this.w*this.h*2);
+		// if(keyIsDown(UP_ARROW))
+		// 	this.shipBox.applyImpulse(v(cos(this.shipBox.angle-PI/2), 
+		// 		sin(this.shipBox.angle-PI/2)), this.w*this.h*0.3);
+		// if(keyIsDown(DOWN_ARROW))
+		// 	this.shipBox.applyImpulse(v(-cos(this.shipBox.angle-PI/2), 
+		// 		-sin(this.shipBox.angle-PI/2)), this.w*this.h*0.3);
+
+		var distance = sqrt(sq(mouseX-this.shipBox.xy.x) 
+			+sq(mouseY-this.shipBox.xy.y));
+		this.shipBox.applyImpulse(
+			v(mouseX-this.shipBox.xy.x, mouseY-this.shipBox.xy.y), 
+			distance);
+
 		if(keyIsDown(32)) {
 			this.fire();
 		}
 	}
 
 	this.update = function(){
+		if(this.shipBox.angle > 0)
+			this.shipBox.applyTorque(-this.w*this.h*degrees(this.shipBox.angle));
+		else if(this.shipBox.angle < 0)
+			this.shipBox.applyTorque(this.w*this.h*degrees(-this.shipBox.angle));
 	}
 
 
