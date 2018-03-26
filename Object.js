@@ -107,12 +107,9 @@ function Enemy(x, y){
     }
 
     this.fire = function(){
-    	
-      	gunSound.play();
-
     	this.timeNow = millis();
 		if(this.timeNow - this.timePre > 1000) {
-			var angleFire = 
+			gunSound.play();
 			new Bullet(this.x, this.y, this.enemyBox.angle, 500, "Texture/bullet.png");
 			this.timePre = this.timeNow;
 		}
