@@ -10,6 +10,8 @@ var newGUI = {
 	},
 	addBox : function() {
 		var newShape = createShape('box', 100, 100, newGUI.w, newGUI.h, newGUI.w*newGUI.h, 0.5, 0.6);
+		// var newShapeTexture = createImg("Texture/Brick.png").hide();
+		// newShape.image(newShapeTexture, 0);
 		newShape.color = color(120, 255, 140);
         newShape.display(attr1, 0);
 	},
@@ -42,4 +44,6 @@ function createGui(){
 	gui.add(newGUI, 'addCir').name('Add Circle');
 	gui.add(newGUI, 'pauseF').name('Pause');
 	gui.add(newGUI, 'help').name('Help');
+
+	gui.close();
 }
