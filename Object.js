@@ -55,7 +55,7 @@ function SpaceShip(x, y){
 	this.fire = function(){
 		this.timeNow = millis();
 		if(this.timeNow - this.timePre > 100) {
-			//gunSound.play();
+			gunSound.play();
 			new Bullet(mouseX, mouseY, 0, 50, "Texture/bullet2.png");
 			this.timePre = this.timeNow;
 		}
@@ -101,7 +101,7 @@ function Enemy(x, y){
     this.fire = function(){
     	this.timeNow = millis();
 		if(this.timeNow - this.timePre > 1000 && this.Box.active) {
-			//gunSound.play();
+			gunSound.play();
 			new Bullet(this.x, this.y, this.Box.angle, 500, "Texture/bullet.png");
 			this.timePre = this.timeNow;
 		}
