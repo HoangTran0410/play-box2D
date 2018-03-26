@@ -9,15 +9,19 @@ var gunSound;
 var timePre;
 var backImage;
 
+function preload(){
+    gunSound = loadSound("Sound/Player_Shoot.wav");
+    backImage = createImg("Texture/BackGround2.jpeg").hide();
+    // ship at mouse posotion
+    shipImg = createImg("Texture/Spaceship2.png").hide(); 
+}
+
 function setup() {
     createCanvas(600, 600);
     noCursor();
 
     imageMode(CENTER);
     timePre = millis();
-    gunSound = loadSound("Sound/Player_Shoot.wav");
-    backImage = createImg("Texture/BackGround2.jpeg").hide();
-    shipImg = createImg("Texture/Spaceship2.png").hide(); // ship at mouse posotion
 
     createGui();
     b2newWorld(45, v(0, 0));
