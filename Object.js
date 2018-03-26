@@ -7,10 +7,12 @@ function SpaceShip(x, y){
 	this.y = y;
 	this.w = 70;
 	this.h = 70;
+	this.health = 100;
 	this.textureShip = createImg("Texture/Spaceship2.png").hide();
-	this.shipBox = new b2Body('polygon', true, v(this.x, this.y), 
+	this.Box = new b2Body('polygon', true, v(this.x, this.y), 
 		[v(10, -35), v(-10, -35), v(-35, 35), v(35,35)], this.w*this.h, 0.5, 0, 0);
-	this.shipBox.image(this.textureShip, 0);
+	this.Box.image(this.textureShip, 0);
+	this.Box.collision = collide;
 
 	this.addShip = function(){
 		ship = new SpaceShip(width/2, height/2);
@@ -18,20 +20,20 @@ function SpaceShip(x, y){
 
 	this.control = function(){
 		if(keyIsDown(LEFT_ARROW))
-			this.shipBox.applyTorque(-this.w*this.h);
+			this.Box.applyTorque(-this.w*this.h);
 		if(keyIsDown(RIGHT_ARROW))
-			this.shipBox.applyTorque(this.w*this.h);
+			this.Box.applyTorque(this.w*this.h);
 		if(keyIsDown(UP_ARROW))
-			this.shipBox.applyImpulse(v(cos(this.shipBox.angle-PI/2), 
-				sin(this.shipBox.angle-PI/2)), this.w*this.h*0.2);
+			this.Box.applyImpulse(v(cos(this.Box.angle-PI/2), 
+				sin(this.Box.angle-PI/2)), this.w*this.h*0.2);
 		if(keyIsDown(DOWN_ARROW))
-			this.shipBox.applyImpulse(v(-cos(this.shipBox.angle-PI/2), 
-				-sin(this.shipBox.angle-PI/2)), this.w*this.h*0.2);
+			this.Box.applyImpulse(v(-cos(this.Box.angle-PI/2), 
+				-sin(this.Box.angle-PI/2)), this.w*this.h*0.2);
 
-		// var distance = sqrt(sq(mouseX-this.shipBox.xy.x) 
-		// 	+sq(mouseY-this.shipBox.xy.y));
-		// this.shipBox.applyImpulse(
-		// 	v(mouseX-this.shipBox.xy.x, mouseY-this.shipBox.xy.y), 
+		// var distance = sqrt(sq(mouseX-this.Box.xy.x) 
+		// 	+sq(mouseY-this.Box.xy.y));
+		// this.Box.applyImpulse(
+		// 	v(mouseX-this.Box.xy.x, mouseY-this.Box.xy.y), 
 		// 	distance);
 
 		if(keyIsDown(32)) {
@@ -40,26 +42,21 @@ function SpaceShip(x, y){
 	}
 
 	this.update = function(){
-		// if(this.shipBox.angle > 0)
-		// 	this.shipBox.applyTorque(-this.w*this.h*degrees(this.shipBox.angle));
-		// else if(this.shipBox.angle < 0)
-		// 	this.shipBox.applyTorque(this.w*this.h*degrees(-this.shipBox.angle));
-		this.x = this.shipBox.xy.x;
-		this.y = this.shipBox.xy.y;
+		this.x = this.Box.xy.x;
+		this.y = this.Box.xy.y;
+
+		// if(this.Box.angle > 0)
+		// 	this.Box.applyTorque(-this.w*this.h*degrees(this.Box.angle));
+		// else if(this.Box.angle < 0)
+		// 	this.Box.applyTorque(this.w*this.h*degrees(-this.Box.angle));
 	}
 
 
 	this.fire = function(){
 		this.timeNow = millis();
 		if(this.timeNow - this.timePre > 100) {
-			gunSound.play();
-
-			// new Bullet(this.shipBox.xy.x, this.shipBox.xy.y,
-			// 			this.shipBox.angle, 50, "Texture/bullet2.png");
-			
-			new Bullet(mouseX, mouseY,
-						0, 50, "Texture/bullet2.png");
-
+			//gunSound.play();
+			new Bullet(mouseX, mouseY, 0, 50, "Texture/bullet2.png");
 			this.timePre = this.timeNow;
 		}
 	}
@@ -73,10 +70,10 @@ function Bullet(x, y, angle, lifeSpan, imagePath){
 	this.h = 15;
 	this.textureBull = createImg(imagePath).hide();
 
-	this.bull = createShape('circle', this.x, this.y, this.w, this.h, this.w*this.h, 0.5, 0.6, angle);
-	this.bull.applyImpulse(v(cos(angle-PI/2), sin(angle-PI/2)), 15*15);
-	this.bull.image(this.textureBull, 0);
-	this.bull.life = lifeSpan;
+	this.Box = createShape('circle', this.x, this.y, this.w, this.h, this.w*this.h, 0.5, 0.6, angle);
+	this.Box.applyImpulse(v(cos(angle-PI/2), sin(angle-PI/2)), 15*15);
+	this.Box.image(this.textureBull, 0);
+	this.Box.life = lifeSpan;
 }
 
 function Enemy(x, y){
@@ -89,28 +86,23 @@ function Enemy(x, y){
 	this.w = 30;
 	this.h = 50;
 
-	this.enemyBox = createShape('box', this.x, this.y, this.w, this.h, 500, 0.5, 0.6);
-	this.enemyBox.applyForce(v(0, 15), 500);
-	this.enemyBox.color = color(140, 20, 140);
-    this.enemyBox.display(attr1, 0);
+	this.Box = createShape('box', this.x, this.y, this.w, this.h, 500, 0.5, 0.6);
+	this.Box.applyForce(v(0, 15), 500);
+	this.Box.color = color(140, 20, 140);
+    this.Box.display(attr1, 0);
 
     this.update = function(){
-    	this.x = this.enemyBox.xy.x;
-    	this.y = this.enemyBox.xy.y;
-
-		// var distance = dist(ship.x, ship.y, this.x, this.y);
-		// this.enemyBox.applyImpulse(v(ship.x-this.x, ship.y-this.y), distance*0.001);
-		follow(this.enemyBox, ship, 0.001);
-
-		this.enemyBox.applyAngularImpulse(10);
-		this.fire();
+    	this.x = this.Box.xy.x;
+    	this.y = this.Box.xy.y;
+    	
+		follow(enemy, traps[0], 0.001);
     }
 
     this.fire = function(){
     	this.timeNow = millis();
-		if(this.timeNow - this.timePre > 1000) {
-			gunSound.play();
-			new Bullet(this.x, this.y, this.enemyBox.angle, 500, "Texture/bullet.png");
+		if(this.timeNow - this.timePre > 1000 && this.Box.active) {
+			//gunSound.play();
+			new Bullet(this.x, this.y, this.Box.angle, 500, "Texture/bullet.png");
 			this.timePre = this.timeNow;
 		}
     }
@@ -118,25 +110,25 @@ function Enemy(x, y){
 
 function Trap(x, y){
 
-	this.timeNow = 0;
-	this.timePre = 0;
+	// this.timeNow = 0;
+	// this.timePre = 0;
 
 	this.x = x;
 	this.y = y;
 	this.w = 70;
 	this.h = 15;
 
-	this.trapBox = createShape('box', x, y, this.w, this.h, 500, 0.5, 0.6);
-	this.trapBox.applyAngularImpulse(100);
-	this.trapBox.applyForce(v(0, 15), 500);
-	this.trapBox.color = color(0, 255, 140);
-    this.trapBox.display(attr1, 0);
+	this.Box = createShape('box', x, y, this.w, this.h, 500, 0.5, 0.6);
+	this.Box.applyAngularImpulse(100);
+	this.Box.applyForce(v(0, 15), 500);
+	this.Box.color = color(0, 255, 140);
+    this.Box.display(attr1, 0);
 
-    this.trapBox.addTo('box', v(15, 0), v(30, 30));
+    this.Box.addTo('box', v(15, 0), v(30, 30));
 
     this.update = function(){
-    	this.x = this.trapBox.xy.x;
-    	this.y = this.trapBox.xy.y;
-    	follow(this.trapBox, enemy, 0.01);
+    	this.x = this.Box.xy.x;
+    	this.y = this.Box.xy.y;
+    	// follow(this.Box, enemy, 0.001);
     }
 }

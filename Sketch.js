@@ -3,14 +3,14 @@ var mouseIndex;
 
 var ship;
 var enemy;
-var trap;
+var traps = [];
 var shipImg;
 var gunSound;
 var timePre;
 var backImage;
 
 function preload(){
-    gunSound = loadSound("Sound/Player_Shoot.wav");
+    //gunSound = loadSound("Sound/Player_Shoot.wav");
     backImage = createImg("Texture/BackGround2.jpeg").hide();
     // ship at mouse posotion
     shipImg = createImg("Texture/Spaceship2.png").hide(); 
@@ -26,14 +26,16 @@ function setup() {
     createGui();
     b2newWorld(45, v(0, 0));
 
-    //createWall(width/2, 0, width, 5); // Top wall
+    createWall(width/2, 0, width, 5); // Top wall
     createWall(width/2, height, width, 5); // bottom wall
     createWall(0, height/2, 5, height); // left wall
     createWall(width, height/2, 5, height); // right wall
 
     ship = new SpaceShip(250, 250);
     enemy = new Enemy(100, 100);
-    trap = new Trap(200, 200);
+
+    for(var i = 0; i < 5; i++) // Khởi tao trap
+        traps.push(new Trap(i*100, 200));
 }
 
 function draw() {
@@ -43,9 +45,19 @@ function draw() {
     if(!newGUI.pause){
         ship.control();
         ship.update();
-
         enemy.update();
-        trap.update();
+        enemy.fire();
+
+        // follow 
+        for(var i = 0; i < traps.length; i++){
+            traps[i].update();
+            for(var j = 0; j < traps.length; j++){
+                follow(traps[i], v(traps[j].x, traps[j].y), 0.001);
+            }
+            // tat ca các trap follow vào giua màn hình : 
+            follow(traps[i], v(width/2, height/2), 0.001);
+        }
+
         b2Update();
     }
 
@@ -53,14 +65,16 @@ function draw() {
     image(shipImg, mouseX, mouseY, 80, 80);
     displayMouse();
     
-    if (mouse != null) mouse.setTarget(v(mouseX, mouseY), mouseIndex); // join mouse and object
+    // join mouse and object
+    if (mouse != null) mouse.setTarget(v(mouseX, mouseY), mouseIndex); 
+    
     if(keyIsDown(81)){ // Q key
         deleteObject();
     }
 }
 
 function keyPressed(){
-    if(keyCode  == 32)
+    if(keyCode  == 32) // Space Key
         ship.fire();
     else if(keyCode == 66){ // B key
         newGUI.addBox();
@@ -118,8 +132,16 @@ function attr1(body, fixture, position) {
 }
 
 function follow(objectFollow, followTo, force){
-    var distance = dist(followTo.x, followTo.y, objectFollow.xy.x, objectFollow.xy.y);
-    objectFollow.applyImpulse(v(followTo.x-objectFollow.xy.x, followTo.y-objectFollow.xy.y), distance*force);
+    var x1 = objectFollow.x;var y1 = objectFollow.y;
+    var x2 = followTo.x;    var y2 = followTo.y;
+    var distance = dist(x1, y1, x2, y2);
+
+    objectFollow.Box.applyImpulse(v(x2-x1, y2-y1), distance*force);
+}
+
+function collide(body1, body2){
+    //body2.destroy();
+    console.log('va cham');
 }
 
 function createRain(){
