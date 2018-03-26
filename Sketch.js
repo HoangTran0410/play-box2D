@@ -10,7 +10,7 @@ var timePre;
 var backImage;
 
 function preload(){
-    //gunSound = loadSound("Sound/Player_Shoot.wav");
+    gunSound = loadSound("Sound/Player_Shoot.wav");
     backImage = createImg("Texture/BackGround2.jpeg").hide();
     // ship at mouse posotion
     shipImg = createImg("Texture/Spaceship2.png").hide(); 
