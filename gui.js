@@ -10,16 +10,18 @@ var newGUI = {
 	},
 	addBox : function() {
 		var newShape = createShape('box', 100, 100, newGUI.w, newGUI.h, newGUI.w*newGUI.h, 0.5, 0.6);
-		// var newShapeTexture = createImg("Texture/Brick.png").hide();
-		// newShape.image(newShapeTexture, 0);
-		newShape.color = color(120, 255, 140);
+		newShape.color = color(random(100, 255), random(100, 255), random(100, 255));
         newShape.display(attr1, 0);
 	},
 	addCir : function(){
 		var newShape = createShape('circle', 100, 100, newGUI.w, newGUI.h, newGUI.w*newGUI.h, 0.5, 0.6);
-		newShape.color = color(255, 120, 130);
+		newShape.color = color(random(100, 255), random(100, 255), random(100, 255));
         newShape.display(attr1, 0);	
-	}, 
+	},
+	addMeteorite : function(){
+		createMeteorite();
+	},
+	rain : false,
 	help : function(){
 		alert(	'Designer  : Hoang Tran\n' +
 				'Made with : P5js + box2D + dat.gui \n\n' +
@@ -42,8 +44,8 @@ function createGui(){
 	gui.add(newGUI, 'addShip').name('Add Ship');
 	gui.add(newGUI, 'addBox').name('Add Box');
 	gui.add(newGUI, 'addCir').name('Add Circle');
+	gui.add(newGUI, 'addMeteorite').name('Add Meteorite');
+	gui.add(newGUI, 'rain').name('Rain');
 	gui.add(newGUI, 'pauseF').name('Pause');
 	gui.add(newGUI, 'help').name('Help');
-
-	gui.close();
 }

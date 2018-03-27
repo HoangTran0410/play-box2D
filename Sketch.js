@@ -11,8 +11,7 @@ var backImage;
 function preload(){
     gunSound = loadSound("Sound/Player_Shoot.wav");
     backImage = createImg("Texture/BackGround2.jpeg").hide();
-    // ship at mouse posotion
-    shipImg = createImg("Texture/Spaceship2.png").hide(); 
+    shipImg = createImg("Texture/Spaceship2.png").hide();  // ship at mouse posotion
 }
 
 function setup() {
@@ -46,7 +45,7 @@ function draw() {
         enemy.update();
         enemy.fire();
 
-        // follow 
+        //follow traps
         for(var i = 0; i < traps.length; i++){
             traps[i].update();
             for(var j = 0; j < traps.length; j++){
@@ -54,6 +53,9 @@ function draw() {
             }
             follow(traps[i], v(width/2, ship.y), 0.001);
         }
+
+        if(newGUI.rain)
+            createRain();
 
         b2Update();
     }
@@ -149,7 +151,7 @@ function createShape(type, x, y, w, h, density, friction, bounce, angle = 0) {
 }
 
 function createRain(){
-    var waterImage = createImg("Texture/Water.png").hide();
+    var waterImage = createImg("Texture/Water3.png").hide();
     if(random()<1 && !newGUI.pause){
         var shapeNew = createShape('circle', random(width), 5, 10, 10, 1, 0.5, 0.1);
         shapeNew.life = 30;
