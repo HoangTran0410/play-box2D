@@ -60,6 +60,7 @@ function Bullet(x, y, angle, lifeSpan, imagePath){
 	this.Box = createShape('circle', this.x, this.y, this.w, this.h, this.w*this.h, 0.5, 0.6, angle);
 	this.Box.applyImpulse(v(cos(angle-PI/2), sin(angle-PI/2)), 15*15);
 	this.Box.life = lifeSpan;
+	this.Box.bullet = true;
 	displayWithImage(this.Box, imagePath);
 }
 
@@ -73,7 +74,7 @@ function Enemy(x, y){
 	this.w = 70;
 	this.h = 70;
 
-	this.Box = createShape('box', this.x, this.y, this.w, this.h, 500, 0.5, 0.6);
+	this.Box = createShape('circle', this.x, this.y, this.w, this.h, 500, 0.5, 0.6);
 	this.Box.applyForce(v(0, 15), 500);
 	displayWithImage(this.Box, "Texture/Spaceship.png");
 
@@ -82,12 +83,12 @@ function Enemy(x, y){
     	this.y = this.Box.xy.y;
     	
     	balance(enemy);
-		follow(enemy, v(ship.x, 100), 0.001);
+		follow(enemy, v(ship.x, 100), 1);
     }
 
     this.fire = function(){
     	this.timeNow = millis();
-		if(this.timeNow - this.timePre > 1000 && this.Box.active) {
+		if(this.timeNow - this.timePre > 500 && this.Box.active) {
 			gunSound.play();
 			new Bullet(this.x, this.y, this.Box.angle+PI, 50, "Texture/bullet.png");
 			this.timePre = this.timeNow;

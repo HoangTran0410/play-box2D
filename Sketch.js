@@ -49,9 +49,8 @@ function draw() {
         for(var i = 0; i < traps.length; i++){
             traps[i].update();
             for(var j = 0; j < traps.length; j++){
-                follow(traps[i], v(traps[j].x, traps[j].y), 0.001);
+                follow(traps[i], v(traps[j].x, traps[j].y), 0.25);
             }
-            follow(traps[i], v(width/2, ship.y), 0.001);
         }
 
         if(newGUI.rain)
@@ -101,13 +100,13 @@ function mouseReleased() {
 function follow(objectFollow, followTo, force){
     var x1 = objectFollow.x;var y1 = objectFollow.y;
     var x2 = followTo.x;    var y2 = followTo.y;
-    var distance = dist(x1, y1, x2, y2);
+    // var distance = dist(x1, y1, x2, y2);
 
-    objectFollow.Box.applyImpulse(v(x2-x1, y2-y1), distance*force);
+    objectFollow.Box.applyImpulse(v(x2-x1, y2-y1), force);
 }
 
 function collide(body1, body2){
-    //body2.destroy();
+    // body2.destroy();
     console.log('va cham');
 }
 
