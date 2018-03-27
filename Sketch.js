@@ -6,7 +6,6 @@ var enemy;
 var traps = [];
 var shipImg;
 var gunSound;
-var timePre;
 var backImage;
 
 function preload(){
@@ -21,14 +20,13 @@ function setup() {
     noCursor();
 
     imageMode(CENTER);
-    timePre = millis();
 
     createGui();
     b2newWorld(45, v(0, 0));
 
-    createWall(width/2, 0, width, 5); // Top wall
-    createWall(width/2, height, width, 5); // bottom wall
-    createWall(0, height/2, 5, height); // left wall
+    createWall(width/2, 0, width, 5);       // Top wall
+    createWall(width/2, height, width, 5);  // bottom wall
+    createWall(0, height/2, 5, height);     // left wall
     createWall(width, height/2, 5, height); // right wall
 
     ship = new SpaceShip(250, 250);
@@ -54,8 +52,7 @@ function draw() {
             for(var j = 0; j < traps.length; j++){
                 follow(traps[i], v(traps[j].x, traps[j].y), 0.001);
             }
-            // tat ca các trap follow vào giua màn hình : 
-            follow(traps[i], v(width/2, height/2), 0.001);
+            follow(traps[i], v(width/2, ship.y), 0.001);
         }
 
         b2Update();
@@ -99,6 +96,31 @@ function mouseReleased() {
     mouse = null;
 }
 
+function follow(objectFollow, followTo, force){
+    var x1 = objectFollow.x;var y1 = objectFollow.y;
+    var x2 = followTo.x;    var y2 = followTo.y;
+    var distance = dist(x1, y1, x2, y2);
+
+    objectFollow.Box.applyImpulse(v(x2-x1, y2-y1), distance*force);
+}
+
+function collide(body1, body2){
+    //body2.destroy();
+    console.log('va cham');
+}
+
+function balance(object){
+    if(object.Box.angle > 0)
+        object.Box.applyTorque(-object.w*object.h*degrees(object.Box.angle));
+    else if(object.Box.angle < 0)
+        object.Box.applyTorque(object.w*object.h*degrees(-object.Box.angle));
+}
+
+function displayWithImage(objectBox, imagePath){
+    var ObjImage = createImg(imagePath).hide();
+    objectBox.image(ObjImage, 0);
+}
+
 function displayMouse(){
     fill(255, 50, 50, 200);
     if(mouseIsPressed){
@@ -126,24 +148,6 @@ function createShape(type, x, y, w, h, density, friction, bounce, angle = 0) {
     return new b2Body(type, true, v(x, y), v(w, h), density, friction, bounce, angle);;
 }
 
-function attr1(body, fixture, position) {
-    fill(body.color);
-    b2Display(body, fixture, position);
-}
-
-function follow(objectFollow, followTo, force){
-    var x1 = objectFollow.x;var y1 = objectFollow.y;
-    var x2 = followTo.x;    var y2 = followTo.y;
-    var distance = dist(x1, y1, x2, y2);
-
-    objectFollow.Box.applyImpulse(v(x2-x1, y2-y1), distance*force);
-}
-
-function collide(body1, body2){
-    //body2.destroy();
-    console.log('va cham');
-}
-
 function createRain(){
     var waterImage = createImg("Texture/Water.png").hide();
     if(random()<1 && !newGUI.pause){
@@ -162,4 +166,9 @@ function createMeteorite(){
         c.applyImpulse(v(random(10), random(10)), 0.1);
         c.image(meteoriteImage, 0);
     }
+}
+
+function attr1(body, fixture, position) {
+    fill(body.color);
+    b2Display(body, fixture, position);
 }
