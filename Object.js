@@ -36,7 +36,7 @@ function SpaceShip(x, y){
 	this.update = function(){
 		this.x = this.Box.xy.x;
 		this.y = this.Box.xy.y;
-		balance(ship);
+		//balance(ship);
 	}
 
 
