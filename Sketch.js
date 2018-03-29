@@ -31,7 +31,7 @@ function setup() {
     ship = new SpaceShip(250, 250);
     enemy = new Enemy(100, 100);
 
-    for(var i = 0; i < 5; i++) // Khởi tao trap
+    for(var i = 0; i < 10; i++) // Khởi tao trap
         traps.push(new Trap(i*100, 200));
 }
 
